@@ -14,9 +14,9 @@ export default function DemoReplyCard({ data }: DemoReplyCardProps) {
   }, {} as Record<string, typeof data.replies>);
 
   const recipientLabels: Record<string, string> = {
-    professor: '教授',
-    family: '家族',
-    friend: '友達',
+    professor: '心理的距離が遠い（例：怖い上司）',
+    family: '心理的距離が中程度（例：そこそこの仲の同僚）',
+    friend: '心理的距離が近い（例：親友）',
   };
 
   const methodLabels: Record<string, string> = {
@@ -27,36 +27,6 @@ export default function DemoReplyCard({ data }: DemoReplyCardProps) {
 
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6 space-y-6">
-      {/* Header */}
-      <div className="border-b pb-4">
-        <h1 className="text-2xl font-bold text-gray-800">
-          最新のデモ返信
-        </h1>
-        {data.timestamp && (
-          <p className="text-sm text-gray-500 mt-1">
-            {data.timestamp.toLocaleString('ja-JP')}
-          </p>
-        )}
-      </div>
-
-      {/* Video Info */}
-      <div className="bg-gray-50 rounded-lg p-4 space-y-2">
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-gray-600">ファイル:</span>
-          <span className="text-sm text-gray-800">{data.videoFileName}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-gray-600">カテゴリ:</span>
-          <span className={`text-sm px-2 py-1 rounded ${
-            data.isInCategory
-              ? 'bg-green-100 text-green-800'
-              : 'bg-gray-200 text-gray-700'
-          }`}>
-            {data.category}
-          </span>
-        </div>
-      </div>
-
       {/* Caption */}
       <div className="space-y-2">
         <h2 className="text-lg font-semibold text-gray-700">キャプション</h2>
@@ -67,7 +37,6 @@ export default function DemoReplyCard({ data }: DemoReplyCardProps) {
 
       {/* Replies */}
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-gray-700">生成された返信</h2>
         {Object.entries(recipientGroups).map(([recipient, replies]) => (
           <div key={recipient} className="border rounded-lg p-4 space-y-3">
             <h3 className="font-semibold text-gray-800 flex items-center gap-2">
