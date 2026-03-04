@@ -5,7 +5,9 @@ import {
   limit,
   onSnapshot,
   Unsubscribe,
-  Timestamp
+  Timestamp,
+  doc,
+  getDoc
 } from 'firebase/firestore';
 import { db } from './firebase';
 import { DemoReplyDocument } from './types';
@@ -58,4 +60,22 @@ export function subscribeToLatestDemoReply(
       callback(null);
     }
   );
+}
+
+export async function getDemoReplyById(id: string): Promise<DemoReplyDocument | null> {
+  const docRef = doc(db, 'demo_replies', id);
+  const snapshot = await getDoc(docRef);
+  if (!snapshot.exists()) return null;
+  const data = snapshot.data();
+  return {
+    id: snapshot.id,
+    videoFilePath: data.videoFilePath || '',
+    videoFileName: data.videoFileName || '',
+    caption: data.caption || '',
+    category: data.category || '',
+    isInCategory: data.isInCategory || false,
+    replies: data.replies || [],
+    timestamp: data.timestamp instanceof Timestamp ? data.timestamp.toDate() : null,
+    createdAt: data.createdAt instanceof Timestamp ? data.createdAt.toDate() : null,
+  };
 }
